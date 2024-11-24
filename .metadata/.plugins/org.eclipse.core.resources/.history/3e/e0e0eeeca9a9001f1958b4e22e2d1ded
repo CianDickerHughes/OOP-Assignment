@@ -1,0 +1,22 @@
+// Cian Dicker-Hughes
+// G00415413@atu.ie
+package ie.atu.sw;
+
+import java.util.*;
+import java.io.*;
+
+/**
+ * 
+ * @author Cian Dicker-Hughes
+ * @version 1.0
+ * @since 1.8
+ *
+ *The Google1000 Class is where the file is load
+ *in the HashMap and check Similarity of the Word 
+ *Embedding of this program. 
+ *
+ */
+
+public class Google1000 {
+
+}
