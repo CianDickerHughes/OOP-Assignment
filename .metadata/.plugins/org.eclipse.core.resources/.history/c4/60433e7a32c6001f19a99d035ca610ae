@@ -1,0 +1,25 @@
+// Cian Dicker-Hughes
+// G00415413@atu.ie
+package ie.atu.sw;
+
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.io.*;
+
+public class ProcessFile {
+	private Set<String> words = new ConcurrentSkipListSet<>();
+	
+	public Google1000() {
+		this.dictionaryFile = "Parse-Text.txt"; // default file path
+	}
+
+	// change the file path to a new file
+	public void setDictionaryFile(String filePath) {
+		this.dictionaryFile = filePath;
+	}
+	
+	// load the file to the map
+		public void load() {
+			
+		}
+}

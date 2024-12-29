@@ -1,0 +1,9 @@
+package ie.atu.sw;
+
+public abstract class AbstractEmbeding {
+	
+	public boolean containsWord(String word) {
+		return false;
+	}
+	
+}

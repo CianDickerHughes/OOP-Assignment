@@ -1,0 +1,37 @@
+package ie.atu.sw;
+
+import java.util.List;
+import java.util.Map;
+
+public abstract class AbstractEmbedding {
+
+    // Abstract method to set the dictionary file
+    public abstract void setDictionaryFile(String filePath);
+
+    // Abstract method to load the file into the map
+    public abstract void load();
+
+    // Abstract method to calculate the dot product between two vectors
+    protected abstract double dotProduct(double[] vectorA, double[] vectorB);
+
+    // Abstract method to find the top N similar words based on their embedding
+    public abstract List<String> findTopNSimilarWords(String word, int n);
+
+    // Abstract method to check if the word exists in the embeddings
+    public abstract boolean containsWord(String word);
+
+    // Abstract method to get the word embedding for a specific word
+    public abstract double[] getWordEmbedding(String word);
+
+    // Abstract method to get which dictionary file is being used
+    public abstract String whichDictionaryFile();
+
+    // Abstract method to return the full map of embeddings
+    public abstract Map<String, double[]> getEmbeddings();
+
+    // Abstract method to get the size of the embedding map
+    public abstract int getSizeEmbedding();
+
+    // Abstract method to get embedding for a specific word
+    public abstract double[] getEmbedding(String word);
+}

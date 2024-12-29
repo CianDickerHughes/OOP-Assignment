@@ -1,0 +1,7 @@
+package ie.atu.sw;
+
+import java.util.concurrent.ConcurrentSkipListSet;
+
+public class ProcessFile {
+	private Set<String> words = new ConcurrentSkipListSet<>();
+}

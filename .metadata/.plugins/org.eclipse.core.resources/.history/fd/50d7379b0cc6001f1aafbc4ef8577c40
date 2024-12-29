@@ -1,0 +1,82 @@
+package ie.atu.sw;
+
+public abstract class AbstractEmbeding {
+	
+	public abstract boolean containsWord(String word);
+	
+	// change the file path to a new file
+	public abstract void setDictionaryFile(String filePath);
+
+	
+	
+	// load the file to the map
+	public abstract void load();
+	
+	// calculates the dot product between two vectors
+	private double dotProduct(double[] vectorA, double[] vectorB) {
+		double dotProduct = 0.0;
+		for (int i = 0; i < vectorA.length; i++) {
+			dotProduct += vectorA[i] * vectorB[i];
+		}
+		return dotProduct;
+	}
+
+	// finds the top N similar words to the given word based on their embedding
+	public List<String> findTopNSimilarWords(String word, int n) {
+		double[] targetEmbedding = embeddings.get(word);
+		if (targetEmbedding == null) {
+			System.out.println("Word not found in embeddings.");
+			return Collections.emptyList();
+		}
+
+		// use a priority queue to keep track of top N similar words
+		PriorityQueue<Map.Entry<String, Double>> pq = new PriorityQueue<>(Map.Entry.comparingByValue());
+
+		for (Map.Entry<String, double[]> entry : embeddings.entrySet()) {
+			if (!entry.getKey().equals(word)) {
+				double similarity = dotProduct(targetEmbedding, entry.getValue());
+				pq.offer(new AbstractMap.SimpleEntry<>(entry.getKey(), similarity));
+				if (pq.size() > n) {
+					pq.poll();
+				}
+			}
+		}
+
+		// extract words from the priority queue
+		List<String> topNWords = new ArrayList<>();
+		while (!pq.isEmpty()) {
+			topNWords.add(0, pq.poll().getKey());
+		}
+
+		return topNWords;
+	}
+
+	// is the word in the map/array
+	public boolean containsWord(String word) {
+		return embeddings.containsKey(word);
+	}
+
+	// get the word Numbers
+	public double[] getWordEmbedding(String word) {
+		return embeddings.get(word);
+	}
+
+	// get which file is being used
+	public String whichDictionaryFile() {
+		return dictionaryFile;
+	}
+
+	// return the full map/array
+	public Map<String, double[]> getEmbeddings() {
+		return this.embeddings;
+	}
+
+	// get size of map
+	public int getSizeEmbedding() {
+		return embeddings.size();
+	}
+
+	public double[] getEmbedding(String word) {
+	    return embeddings.get(word);
+	}
+}

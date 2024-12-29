@@ -1,0 +1,5 @@
+package ie.atu.sw;
+
+public abstract class AbstractEmbeding {
+
+}

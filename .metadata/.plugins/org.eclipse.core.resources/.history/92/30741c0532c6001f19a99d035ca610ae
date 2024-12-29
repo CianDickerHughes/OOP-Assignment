@@ -1,0 +1,15 @@
+package ie.atu.sw;
+
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.io.*;
+
+
+public class ProcessFile {
+	private Set<String> words = new ConcurrentSkipListSet<>();
+	
+	// load the file to the map
+		public void load() {
+			
+		}
+}

@@ -18,7 +18,7 @@ import java.io.*;
  *Embedding of this program. 
  *
  */
-public class WordEmbedding {
+public class WordEmbedding extends AbstractEmbedding {
 	private ConcurrentMap<String, double[]> embeddings = new ConcurrentHashMap<>();
 	private String dictionaryFile = "";
 
@@ -116,27 +116,38 @@ public class WordEmbedding {
 	}
 
 	// is the word in the map/array
+	@Override
 	public boolean containsWord(String word) {
 		return embeddings.containsKey(word);
 	}
 
 	// get the word Numbers
+	@Override
 	public double[] getWordEmbedding(String word) {
 		return embeddings.get(word);
 	}
 
 	// get which file is being used
+	@Override
 	public String whichDictionaryFile() {
 		return dictionaryFile;
 	}
 
 	// return the full map/array
+	@Override
 	public Map<String, double[]> getEmbeddings() {
 		return this.embeddings;
 	}
 
 	// get size of map
-	public int getSizeEmbedding() {
+	@Override
+	public int getSize() {
 		return embeddings.size();
 	}
+
+	@Override
+	public double[] getEmbedding(String word) {
+	    return embeddings.get(word);
+	}
+
 }

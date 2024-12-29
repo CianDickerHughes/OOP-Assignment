@@ -1,0 +1,45 @@
+package ie.atu.sw;
+
+public abstract class AbstractEmbeding {
+		
+	// change the file path to a new file
+	public abstract void setDictionaryFile(String filePath);
+
+	
+	
+	// load the file to the map
+	public abstract void load();
+	
+	// calculates the dot product between two vectors
+	private abstract double dotProduct(double[] vectorA, double[] vectorB);
+	
+	// finds the top N similar words to the given word based on their embedding
+	public abstract List<String> findTopNSimilarWords(String word, int n);
+
+	public abstract boolean containsWord(String word);
+
+
+	// get the word Numbers
+	public double[] getWordEmbedding(String word) {
+		return embeddings.get(word);
+	}
+
+	// get which file is being used
+	public String whichDictionaryFile() {
+		return dictionaryFile;
+	}
+
+	// return the full map/array
+	public Map<String, double[]> getEmbeddings() {
+		return this.embeddings;
+	}
+
+	// get size of map
+	public int getSizeEmbedding() {
+		return embeddings.size();
+	}
+
+	public double[] getEmbedding(String word) {
+	    return embeddings.get(word);
+	}
+}

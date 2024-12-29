@@ -16,10 +16,10 @@ import java.io.*;
  *The Google1000 Class is where the file is load
  *in the ConcurrentHashMap and check Similarity of the Word 
  *Embedding of this program. 
- *
+ *s
  */
 
-public class Google1000 {
+public class Google1000 extends AbstractEmbedding {
 	private ConcurrentMap<String, double[]> google1000 = new ConcurrentHashMap<>();
 	private String dictionaryFile = "";
 
@@ -33,8 +33,8 @@ public class Google1000 {
 	}
 	
 	// load the file to the map
-	public void load() {
-		google1000.clear();
+	public void load(WordEmbedding wordEmbedding) {
+	    google1000.clear();
 	    System.out.println("Loading google-1000 from file: " + dictionaryFile);
 	    try (var br = new BufferedReader(new InputStreamReader(new FileInputStream(dictionaryFile)))) {
 	        String line;
@@ -42,35 +42,62 @@ public class Google1000 {
 	            line = line.trim();
 	            String[] parts = line.split(",\\s*");
 	            String word = parts[0];
-	            double[] google = Arrays.stream(parts, 1, parts.length).mapToDouble(Double::parseDouble).toArray();
-	            google1000.put(word, google);
+	            double[] embedding = Arrays.stream(parts, 1, parts.length).mapToDouble(Double::parseDouble).toArray();
+	            
+	            // Check if the word exists in WordEmbedding
+	            if (wordEmbedding.containsWord(word)) {
+	                double[] wordEmbeddingValue = wordEmbedding.getEmbedding(word);
+	                google1000.put(word, wordEmbeddingValue); // Use embedding from WordEmbedding
+	            } else {
+	                google1000.put(word, embedding); // Use default embedding
+	            }
 	        }
 	    } catch (IOException e) {
 	        System.err.println("[ERROR] Encountered a problem reading the file: " + e.getMessage());
 	        if (dictionaryFile.equals("google-1000.txt")) {
 	            System.err.println("google-1000.txt file not found.");
-	        } 
-	        else {
+	        } else {
 	            System.out.println("Reverting to default file: google-1000.txt");
 	            dictionaryFile = "google-1000.txt";
-	            load(); // Reload using default file
+	            load(wordEmbedding); // Reload using default file
 	        }
 	    }
 	}
-	
-	
-	public boolean containsWord(String word) {
-	    return google1000.containsKey(word);
-	}
-	
+	@Override
 	public int getSize() {
 	    return google1000.size();
 	}
-
+	
+	@Override
+	public boolean containsWord(String word) {
+	    return google1000.containsKey(word);
+	}
 	
 	public Map<String, double[]> getEmbeddings() {
 	    return Collections.unmodifiableMap(google1000);
 	}
 
+	// get which file is being used
+	public String whichDictionaryFile() {
+		return dictionaryFile;
+	}
+	
+	
+	// get size of map
+	public int getSizeEmbedding() {
+		return google1000.size();
+	}
+	
+	@Override
+	public double[] getWordEmbedding(String word) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public double[] getEmbedding(String word) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
