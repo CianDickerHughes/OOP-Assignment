@@ -104,6 +104,6 @@ public enum ConsoleColour {
 	
 	@Override
     public String toString() {
-        return CTRL_SEQ_INTRO + this.colour + CTRL_SEQ_END; 
-    }
+		return CTRL_SEQ_INTRO + this.colour + CTRL_SEQ_END;
+	}
 }

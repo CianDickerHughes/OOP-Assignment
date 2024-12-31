@@ -18,92 +18,91 @@ public class MainMeunPage {
 		System.out.println("(2) Specify Google 1000 File");
 		System.out.println("(3) Specify an Output File (default: ./out.txt)");
 		System.out.println("(4) Execute, Analyse and Report");
-		System.out.println("(5) Test word embedding");
-		System.out.println("(6) Test google 1000");
-		System.out.println("(7) Test Parse Text");
+		System.out.println("(5) Which Embedding File being Used");
+		System.out.println("(6) Which Google 1000 File being Used");
+		System.out.println("(7) Which Output File being Used");
 		System.out.println("(9) Optional Extras...");
 		System.out.println("(-1) Quit");
-		
+
 		Scanner input = new Scanner(System.in);
-	    int op;
-		
-		//Output a menu of options and solicit text from the user
+		int op;
+
+		// Output a menu of options and solicit text from the user
 		System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
 		System.out.print("Select Option [1-9]> ");
-		
-        // Validate input
+
+		// Validate input
 		while (true) {
-            if (input.hasNextInt()) {  // Check if the input is an integer
-                op = input.nextInt();
-                if (op >= 1 && op <= 9 || op == -1) { 
-                    break;  
-                } else {
-                    System.out.println("Invalid option. Please select between [0-9].");
-                }
-            } else {
-                System.out.println("Invalid input. Please enter an integer.");
-                input.next();  
-            }
-        }
+			if (input.hasNextInt()) { // Check if the input is an integer
+				op = input.nextInt();
+				if (op >= 1 && op <= 9 || op == -1) {
+					break;
+				} else {
+					System.out.println("Invalid option. Please select between [0-9].");
+				}
+			} else {
+				System.out.println("Invalid input. Please enter an integer.");
+				input.next();
+			}
+		}
 		return op;
 	}
-	
+
 	/*
-	 *  Terminal Progress Meter
-	 *  -----------------------
-	 *  You might find the progress meter below useful. The progress effect 
-	 *  works best if you call this method from inside a loop and do not call
-	 *  System.out.println(....) until the progress meter is finished.
-	 *  
-	 *  Please note the following carefully:
-	 *  
-	 *  1) The progress meter will NOT work in the Eclipse console, but will
-	 *     work on Windows (DOS), Mac and Linux terminals.
-	 *     
-	 *  2) The meter works by using the line feed character "\r" to return to
-	 *     the start of the current line and writes out the updated progress
-	 *     over the existing information. If you output any text between 
-	 *     calling this method, i.e. System.out.println(....), then the next
-	 *     call to the progress meter will output the status to the next line.
-	 *      
-	 *  3) If the variable size is greater than the terminal width, a new line
-	 *     escape character "\n" will be automatically added and the meter won't
-	 *     work properly.  
-	 *  
+	 * Terminal Progress Meter ----------------------- You might find the progress
+	 * meter below useful. The progress effect works best if you call this method
+	 * from inside a loop and do not call System.out.println(....) until the
+	 * progress meter is finished.
+	 * 
+	 * Please note the following carefully:
+	 * 
+	 * 1) The progress meter will NOT work in the Eclipse console, but will work on
+	 * Windows (DOS), Mac and Linux terminals.
+	 * 
+	 * 2) The meter works by using the line feed character "\r" to return to the
+	 * start of the current line and writes out the updated progress over the
+	 * existing information. If you output any text between calling this method,
+	 * i.e. System.out.println(....), then the next call to the progress meter will
+	 * output the status to the next line.
+	 * 
+	 * 3) If the variable size is greater than the terminal width, a new line escape
+	 * character "\n" will be automatically added and the meter won't work properly.
+	 * 
 	 * 
 	 */
-	
+
 	public static void printProgress(int index, int total) {
-		if (index > total) return;	//Out of range
-        int size = 50; 				//Must be less than console width
-	    char done = '█';			//Change to whatever you like.
-	    char todo = '░';			//Change to whatever you like.
-	    
-	    //Compute basic metrics for the meter
-        int complete = (100 * index) / total;
-        int completeLen = size * complete / 100;
-        
-        /*
-         * A StringBuilder should be used for string concatenation inside a 
-         * loop. However, as the number of loop iterations is small, using
-         * the "+" operator may be more efficient as the instructions can
-         * be optimized by the compiler. Either way, the performance overhead
-         * will be marginal.  
-         */
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (int i = 0; i < size; i++) {
-        	sb.append((i < completeLen) ? done : todo);
-        }
-        
-        /*
-         * The line feed escape character "\r" returns the cursor to the 
-         * start of the current line. Calling print(...) overwrites the
-         * existing line and creates the illusion of an animation.
-         */
-        System.out.print("\r" + sb + "] " + complete + "%");
-        
-        //Once the meter reaches its max, move to a new line.
-        if (done == total) System.out.println("\n");
-    }
+		if (index > total)
+			return; // Out of range
+		int size = 50; // Must be less than console width
+		char done = '█'; // Change to whatever you like.
+		char todo = '░'; // Change to whatever you like.
+
+		// Compute basic metrics for the meter
+		int complete = (100 * index) / total;
+		int completeLen = size * complete / 100;
+
+		/*
+		 * A StringBuilder should be used for string concatenation inside a loop.
+		 * However, as the number of loop iterations is small, using the "+" operator
+		 * may be more efficient as the instructions can be optimized by the compiler.
+		 * Either way, the performance overhead will be marginal.
+		 */
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		for (int i = 0; i < size; i++) {
+			sb.append((i < completeLen) ? done : todo);
+		}
+
+		/*
+		 * The line feed escape character "\r" returns the cursor to the start of the
+		 * current line. Calling print(...) overwrites the existing line and creates the
+		 * illusion of an animation.
+		 */
+		System.out.print("\r" + sb + "] " + complete + "%");
+
+		// Once the meter reaches its max, move to a new line.
+		if (done == total)
+			System.out.println("\n");
+	}
 }

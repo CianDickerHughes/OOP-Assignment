@@ -13,9 +13,9 @@ import java.io.*;
 
 public class SimplifyingText {
 	private Set<String> words = new ConcurrentSkipListSet<>();
-    private List<String> originalText  = new ArrayList<>(); 
+	private List<String> originalText = new ArrayList<>();
 	private String dictionaryFile = "";
-	
+
 	public SimplifyingText() {
 		this.dictionaryFile = "Parse-Text.txt"; // default file path
 	}
@@ -24,7 +24,7 @@ public class SimplifyingText {
 	public void setDictionaryFile(String filePath) {
 		this.dictionaryFile = filePath;
 	}
-	
+
 	// load the file to the map
 	public void load() {
 		words.clear();
@@ -32,56 +32,39 @@ public class SimplifyingText {
 		System.out.println("Loading Parse-Text from file: " + dictionaryFile);
 		try (BufferedReader br = new BufferedReader(new FileReader(dictionaryFile))) {
 			String line;
-		    while ((line = br.readLine()) != null) {
-		        
+			while ((line = br.readLine()) != null) {
+
 				// Split the line into words using a regular expression
 				String[] lineWords = line.split("\\W+"); // Splits on non-word characters
-		
+
 				for (String word : lineWords) {
-	                if (!word.isEmpty()) { // Skip empty strings
-	                	originalText.add(word); // Add to the text list
-	                    words.add(word.toLowerCase()); // Add to the set (convert to lowercase)
-	                }
-	            }
-		    }
+					if (!word.isEmpty()) { // Skip empty strings
+						originalText.add(word); // Add to the text list
+						words.add(word.toLowerCase()); // Add to the set (convert to lowercase)
+					}
+				}
+			}
+		} catch (IOException e) {
+			System.err.println("Error reading file: " + e.getMessage());
 		}
-		catch (IOException e) {
-		    System.err.println("Error reading file: " + e.getMessage());
-		    }
-	}   
+	}
 
 	// get size for words
 	public int getSize() {
-		    return words.size();
+		return words.size();
 	}
-		
-	// display words
-	public void displayWords() {
-	    System.out.println("Words in the file:");
-	    for (String word : words) {
-	        System.out.println(word);
-	    }
-	}	
-	
-	// display texts
-	public void displayText() {
-	    System.out.println("text in the file:");
-	    for (String texts : originalText) {
-	        System.out.println(texts);
-	    }
-	}	
 
 	// get which file is being used
 	public String whichDictionaryFile() {
 		return dictionaryFile;
 	}
-	
-    // getter for words set
+
+	// getter for words set
 	public Set<String> getWords() {
-        return words;
-    }
-	
+		return words;
+	}
+
 	public List<String> getOriginalText() {
-        return originalText;
-    }
+		return originalText;
+	}
 }

@@ -13,9 +13,9 @@ import java.io.*;
  * @version 1.0
  * @since 1.8
  *
- *The WordEmbedding Class is where the file is load
- *in the ConcurrentHashMap and check Similarity of the Word 
- *Embedding of this program. 
+ *        The WordEmbedding Class is where the file is load in the
+ *        ConcurrentHashMap and check Similarity of the Word Embedding of this
+ *        program.
  *
  */
 public class WordEmbedding extends AbstractEmbedding {
@@ -33,49 +33,46 @@ public class WordEmbedding extends AbstractEmbedding {
 
 	/**
 	 *
-	 * load() function that loads in the file and store the 
-	 * contents to a ConcurrentHashMap.
-	 * If it fail to load it will default to "word-embeddings.txt".
-	 * If it can't find "word-embeddings.txt" it will 
+	 * load() function that loads in the file and store the contents to a
+	 * ConcurrentHashMap. If it fail to load it will default to
+	 * "word-embeddings.txt". If it can't find "word-embeddings.txt" it will
 	 * continue the program.
 	 * 
 	 */
-	
+
 	// load the file to the map
 	public void load() {
-	    embeddings.clear();
-	    System.out.println("Loading embeddings from file: " + dictionaryFile);
-	    try (var br = new BufferedReader(new InputStreamReader(new FileInputStream(dictionaryFile)))) {
-	        String line;
-	        while ((line = br.readLine()) != null) {
-	            line = line.trim();
-	            String[] parts = line.split(",\\s*");
-	            String word = parts[0];
-	            double[] embedding = Arrays.stream(parts, 1, parts.length).mapToDouble(Double::parseDouble).toArray();
-	            embeddings.put(word, embedding);
-	        }
-	    } catch (IOException e) {
-	        System.err.println("[ERROR] Encountered a problem reading the file: " + e.getMessage());
-	        if (dictionaryFile.equals("word-embeddings.txt")) {
-	            System.err.println("word-embeddings.txt file not found.");
-	        } 
-	        else {
-	            System.out.println("Reverting to default file: word-embeddings.txt");
-	            dictionaryFile = "word-embeddings.txt";
-	            load(); // Reload using default file
-	        }
-	    }
+		embeddings.clear();
+		System.out.println("Loading embeddings from file: " + dictionaryFile);
+		try (var br = new BufferedReader(new InputStreamReader(new FileInputStream(dictionaryFile)))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				line = line.trim();
+				String[] parts = line.split(",\\s*");
+				String word = parts[0];
+				double[] embedding = Arrays.stream(parts, 1, parts.length).mapToDouble(Double::parseDouble).toArray();
+				embeddings.put(word, embedding);
+			}
+		} catch (IOException e) {
+			System.err.println("[ERROR] Encountered a problem reading the file: " + e.getMessage());
+			if (dictionaryFile.equals("word-embeddings.txt")) {
+				System.err.println("word-embeddings.txt file not found.");
+			} else {
+				System.out.println("Reverting to default file: word-embeddings.txt");
+				dictionaryFile = "word-embeddings.txt";
+				load(); // Reload using default file
+			}
+		}
 	}
 
 	/**
 	 * 
-	 * findTopNSimilarWords() function Compare the 
-	 * Similarity of Words by using Word-Embedding.
-	 * It uses the Dot Product for the Comparing 
-	 * Vectors for Similarity.
+	 * findTopNSimilarWords() function Compare the Similarity of Words by using
+	 * Word-Embedding. It uses the Dot Product for the Comparing Vectors for
+	 * Similarity.
 	 * 
 	 */
-	
+
 	// calculates the dot product between two vectors
 	private double dotProduct(double[] vectorA, double[] vectorB) {
 		double dotProduct = 0.0;
@@ -87,7 +84,7 @@ public class WordEmbedding extends AbstractEmbedding {
 
 	// finds the top N similar words to the given word based on their embedding
 	public List<String> findTopNSimilarWords(String word) {
-		int n  = 1;
+		int n = 1;
 		double[] targetEmbedding = embeddings.get(word);
 		if (targetEmbedding == null) {
 			System.out.println("Word not found in embeddings.");
@@ -148,6 +145,6 @@ public class WordEmbedding extends AbstractEmbedding {
 
 	@Override
 	public double[] getEmbedding(String word) {
-	    return embeddings.get(word);
+		return embeddings.get(word);
 	}
 }
