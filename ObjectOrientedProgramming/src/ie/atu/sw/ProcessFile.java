@@ -2,19 +2,26 @@
 // G00415413@atu.ie
 package ie.atu.sw;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
-import java.io.*;
+import java.util.concurrent.*;
 
 public class ProcessFile {
 	private Set<String> words = new ConcurrentSkipListSet<>();
+    private Map<String, String> updateWordMap = new ConcurrentHashMap<>();
+    private List<String> originalText  = new ArrayList<>(); 
+	private ConcurrentMap<String, double[]> google = new ConcurrentHashMap<>();
+	private ConcurrentMap<String, double[]> embeddings = new ConcurrentHashMap<>();
 	private String dictionaryFile = "";
+
+	private String word = "test";
+	private String test;
 	
 	public ProcessFile() {
-		this.dictionaryFile = "Parse-Text.txt"; // default file path
+		this.dictionaryFile = "out.txt"; // default file path
 	}
 
 	// change the file path to a new file
@@ -22,34 +29,64 @@ public class ProcessFile {
 		this.dictionaryFile = filePath;
 	}
 	
-	// load the file to the map
-	public void load() {
-		words.clear();
-	    System.out.println("Loading Parse-Text from file: " + dictionaryFile);
-		try (BufferedReader br = new BufferedReader(new FileReader(dictionaryFile))) {
-	        String line;
-	        while ((line = br.readLine()) != null) {
-	            // Split the line into words using a regular expression
-	            String[] lineWords = line.split("\\W+"); // Splits on non-word characters
-	            // Add each word to the set
-	            words.addAll(Arrays.asList(lineWords));
+	public void execute(SimplifyingText simplifyingText, Google1000 google1000, WordEmbedding wordEmbedding) {
+        // ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
+		// List<String> currentSimilarWords = wordEmbedding.findTopNSimilarWords(words);
+		// System.out.println("\n similar words: " + currentSimilarWords);
+		
+		originalText = simplifyingText.getOriginalText(); // get words from ArrayList
+		words = simplifyingText.getWords(); // get words from ConcurrentSkipListSet
+		google = google1000.getEmbeddings(); // get google 1000
+		embeddings = wordEmbedding.getEmbeddings(); // get Embeddings
+				
+		// update words
+		for (String word : words) {
+			if (google.containsKey(word)) { // Check if the word is in the Google 1000 set
+	            } else {
+	                if (embeddings.containsKey(word)) {
+	                    List<String> similarWords = wordEmbedding.findTopNSimilarWords(word);
+	                    System.out.println(similarWords +" "+ word);
+	                    if (!similarWords.isEmpty()) {
+	                        System.out.println("Replacing " + word + " with similar word: " + similarWords.get(0));
+	                        String similarWord = similarWords.get(0); // Get the top similar word
+	                        updateWordMap.put(word, similarWord);
+	                    }
+	                } else {
+	                }
+	            }
 	        }
-	    } catch (IOException e) {
-	        System.err.println("Error reading file: " + e.getMessage());
-	    }
-    }
-	
-	public int getSize() {
-	    return words.size();
-	}
-	
-	public void displayWords() {
-        System.out.println("Words in the file:");
-        for (String word : words) {
-            System.out.println(word);
+		
+		 // Print to console
+        System.out.println("Originl Text");
+		for (String line : originalText) {
+            System.out.print(line+" ");
+        }System.out.println("");
+		
+		
+		// Update the originalText with the new modified words
+		 for (int i = 0; i < originalText.size(); i++) {
+	            String word = originalText.get(i);
+	            if (updateWordMap.containsKey(word)) {
+	                originalText.set(i, updateWordMap.get(word)); // Replace the word with the updated version
+	            }
+	        }
+        
+        // Print to console
+		System.out.println("modified Text");
+		for (String line : originalText) {
+            System.out.print(line+" ");
+        }System.out.println("");
+        
+        // Write to file
+        try (FileWriter writer = new FileWriter(dictionaryFile)) {
+            for (String line : originalText) {
+                writer.write(line +" "); 
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    }	
-
+	}	
+	
 	// get which file is being used
 	public String whichDictionaryFile() {
 		return dictionaryFile;

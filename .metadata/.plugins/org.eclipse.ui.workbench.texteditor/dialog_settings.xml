@@ -4,6 +4,8 @@
 	<section name="java.lang.Class">
 		<item key="replaceBarOpen" value="false"/>
 		<list key="findhistory">
+			<item value="dictionaryFile"/>
+			<item value="getWordEmbedding"/>
 			<item value="load"/>
 			<item value="getsize"/>
 		</list>

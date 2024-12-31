@@ -23,7 +23,7 @@ public class WordEmbedding extends AbstractEmbedding {
 	private String dictionaryFile = "";
 
 	public WordEmbedding() {
-		this.dictionaryFile = "word-embeddings.txt"; // default file path
+		this.dictionaryFile = "embeddings.txt"; // default file path
 	}
 
 	// change the file path to a new file
@@ -86,7 +86,8 @@ public class WordEmbedding extends AbstractEmbedding {
 	}
 
 	// finds the top N similar words to the given word based on their embedding
-	public List<String> findTopNSimilarWords(String word, int n) {
+	public List<String> findTopNSimilarWords(String word) {
+		int n  = 1;
 		double[] targetEmbedding = embeddings.get(word);
 		if (targetEmbedding == null) {
 			System.out.println("Word not found in embeddings.");
@@ -135,7 +136,7 @@ public class WordEmbedding extends AbstractEmbedding {
 
 	// return the full map/array
 	@Override
-	public Map<String, double[]> getEmbeddings() {
+	public ConcurrentMap<String, double[]> getEmbeddings() {
 		return this.embeddings;
 	}
 
@@ -149,5 +150,4 @@ public class WordEmbedding extends AbstractEmbedding {
 	public double[] getEmbedding(String word) {
 	    return embeddings.get(word);
 	}
-
 }

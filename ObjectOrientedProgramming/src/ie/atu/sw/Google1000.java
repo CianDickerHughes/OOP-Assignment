@@ -63,6 +63,7 @@ public class Google1000 extends AbstractEmbedding {
 	        }
 	    }
 	}
+	
 	@Override
 	public int getSize() {
 	    return google1000.size();
@@ -73,8 +74,8 @@ public class Google1000 extends AbstractEmbedding {
 	    return google1000.containsKey(word);
 	}
 	
-	public Map<String, double[]> getEmbeddings() {
-	    return Collections.unmodifiableMap(google1000);
+	public ConcurrentMap<String, double[]> getEmbeddings() {
+	    return this.google1000;
 	}
 
 	// get which file is being used
@@ -91,13 +92,13 @@ public class Google1000 extends AbstractEmbedding {
 	@Override
 	public double[] getWordEmbedding(String word) {
 		// TODO Auto-generated method stub
-		return null;
+		return google1000.get(word);
 	}
 
 	@Override
 	public double[] getEmbedding(String word) {
 		// TODO Auto-generated method stub
-		return null;
+		return google1000.get(word);
 	}
 
 }

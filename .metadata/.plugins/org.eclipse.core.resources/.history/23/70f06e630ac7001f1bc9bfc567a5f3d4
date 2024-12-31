@@ -1,0 +1,44 @@
+package ie.atu.sw;
+
+import java.util.*;
+
+public class MainMeunPage {
+	public static int meun() throws Exception {
+		System.out.print(ConsoleColour.YELLOW_BOLD);
+		System.out.println("***************************************************************");
+		System.out.println("*   ATU - Dept. of Computer Science & Applied Physics  *");
+		System.out.println("*                                                                                     *");
+		System.out.println("*                  Virtual Threaded Text Simplifier                  *");
+		System.out.println("*                                                                                     *");
+		System.out.println("***************************************************************");
+		System.out.print(ConsoleColour.BLUE_BOLD_BRIGHT);
+		System.out.println("(1) Specify Embeddings File");
+		System.out.println("(2) Specify Google 1000 File");
+		System.out.println("(3) Specify an Output File (default: ./out.txt)");
+		System.out.println("(4) Execute, Analyse and Report");
+		System.out.println("(5) Test word embedding");
+		System.out.println("(6) Test google 1000");
+		System.out.println("(7) Test Parse Text");
+		System.out.println("(9) Optional Extras...");
+		System.out.println("(-1) Quit");
+		
+		//Output a menu of options and solicit text from the user
+		System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+		System.out.print("Select Option [1-9]> ");
+		
+        // Validate input
+		while (true) {
+            if (input.hasNextInt()) {  // Check if the input is an integer
+                op = input.nextInt();
+                if (op >= 1 && op <= 9 || op == -1) { 
+                    break;  
+                } else {
+                    System.out.println("Invalid option. Please select between [0-9].");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter an integer.");
+                input.next();  
+            }
+        }
+	}
+}

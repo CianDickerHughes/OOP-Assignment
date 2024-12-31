@@ -1,0 +1,10 @@
+package ie.atu.sw;
+
+import java.util.*;
+
+
+public class MainMeunPage {
+	public static int meun() throws Exception {
+		
+	}
+}
