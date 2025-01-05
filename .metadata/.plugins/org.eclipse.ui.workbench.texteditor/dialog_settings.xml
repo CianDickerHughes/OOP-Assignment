@@ -10,6 +10,9 @@
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="wait"/>
+			<item value="mai"/>
+			<item value="/**&#x0A; * The ProcessFile class handles the processing of text files for simplification&#x0A; * and word replacement based on Google 1000 embeddings and word embeddings.&#x0A; * It uses concurrent processing for efficient execution, modifies the text &#x0A; * based on similarity analysis, and writes the updated text to a file.&#x0A; * &#x0A; * This class relies on the SimplifyingText, Google1000, and WordEmbedding classes &#x0A; * for data sources and provides functionality to update and simplify the text.&#x0A; * &#x0A; * @author Cian Dicker-Hughes&#x0A; * @version 1.0&#x0A; * @since 1.8&#x0A; */"/>
 			<item value="pica"/>
 			<item value="charadriidae"/>
 			<item value="dictionaryFile"/>
